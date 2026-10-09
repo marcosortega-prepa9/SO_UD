@@ -1,0 +1,1468 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Master Repaso: Sistemas Operativos y Unidades Digitales</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+            user-select: none;
+        }
+        .font-tech {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        .glass-card {
+            background: rgba(30, 41, 59, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .glass-card-hover:hover {
+            border-color: rgba(56, 189, 248, 0.5);
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.2);
+            transform: translateY(-2px);
+        }
+        .neon-glow-blue {
+            box-shadow: 0 0 15px rgba(14, 165, 233, 0.4);
+        }
+        .neon-glow-purple {
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
+        }
+        .neon-text-blue {
+            text-shadow: 0 0 10px rgba(56, 189, 248, 0.6);
+        }
+        .neon-text-green {
+            text-shadow: 0 0 10px rgba(74, 222, 128, 0.6);
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.85; transform: scale(0.98); }
+        }
+        .animate-pulse-glow {
+            animation: pulse-glow 2s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between overflow-x-hidden bg-slate-950 text-slate-100">
+
+    <!-- Top Navigation Header -->
+    <header class="sticky top-0 z-50 glass-card border-b border-slate-800 px-4 py-3 shadow-lg">
+        <div class="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-3">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('dashboard')">
+                <div class="bg-gradient-to-tr from-cyan-500 to-blue-600 p-2.5 rounded-xl shadow-md text-white">
+                    <i class="fa-solid font-bold fa-microchip text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="font-tech text-lg sm:text-xl font-extrabold tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-300 to-indigo-400">
+                        CYBER REPASO PREPA 9
+                    </h1>
+                    <p class="text-xs text-slate-400">Sistemas Operativos & Medidas Digitales</p>
+                </div>
+            </div>
+
+            <!-- Global Score & Controls -->
+            <div class="flex items-center space-x-2 sm:space-x-4">
+                <div class="bg-slate-900/90 border border-slate-800 px-3 py-1.5 rounded-lg flex items-center space-x-2">
+                    <i class="fa-solid fa-trophy text-amber-400 text-sm"></i>
+                    <span class="text-xs font-semibold text-slate-400">Puntaje:</span>
+                    <span id="globalScore" class="font-tech font-bold text-cyan-400 text-base">0</span>
+                </div>
+                
+                <button onclick="toggleAudio()" id="audioBtn" class="bg-slate-800 hover:bg-slate-700 p-2.5 rounded-lg text-slate-300 hover:text-white transition" title="Activar/Desactivar Sonido">
+                    <i class="fa-solid fa-volume-high" id="audioIcon"></i>
+                </button>
+
+                <button onclick="switchTab('study')" class="bg-indigo-600/30 hover:bg-indigo-600/50 border border-indigo-500/40 text-indigo-300 px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center space-x-1.5 transition">
+                    <i class="fa-solid fa-book-open"></i>
+                    <span class="hidden sm:inline">Guía Rápida</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-grow max-w-6xl w-full mx-auto p-4 sm:p-6 flex flex-col justify-center">
+
+        <!-- PANEL 1: HOME DASHBOARD -->
+        <section id="dashboardView" class="space-y-6">
+            <!-- Hero Banner -->
+            <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-blue-900/40 via-indigo-900/40 to-slate-900/80 border border-indigo-500/30 p-6 sm:p-8">
+                <div class="relative z-10 max-w-2xl">
+                    <span class="bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 text-xs px-3 py-1 rounded-full font-semibold uppercase tracking-wider">
+                        Repaso Interactivo Preparatoria
+                    </span>
+                    <h2 class="font-tech text-2xl sm:text-4xl font-bold mt-3 mb-2 text-white">
+                        ¡Domina los Sistemas Operativos y las Medidas Digitales!
+                    </h2>
+                    <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                        Demuestra tus conocimientos antes del examen. Supera los 4 modos dinámicos de juego para repasar desde el <i>Director de Orquesta</i> hasta los <i>Gigahertz</i> y los <i>Terabytes</i>.
+                    </p>
+                </div>
+                <i class="fa-solid fa-server absolute right-4 bottom-[-20px] text-8xl text-indigo-500/10 pointer-events-none hidden sm:block"></i>
+            </div>
+
+            <!-- Game Mode Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+                
+                <!-- Card Mode 1: Software & Privilegios -->
+                <div onclick="startMode('clasificador')" class="glass-card glass-card-hover p-6 rounded-2xl cursor-pointer transition duration-300 flex flex-col justify-between group">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="bg-gradient-to-br from-cyan-500 to-blue-600 p-3.5 rounded-xl text-white shadow-lg group-hover:scale-110 transition">
+                            <i class="fa-solid fa-filter text-2xl"></i>
+                        </div>
+                        <span class="text-xs bg-slate-800 border border-slate-700 px-2.5 py-1 rounded-full text-cyan-400 font-semibold">
+                            Nivel 1
+                        </span>
+                    </div>
+                    <div>
+                        <h3 class="font-tech text-xl font-bold text-white group-hover:text-cyan-300 transition">
+                            1. Clasificador Cyber
+                        </h3>
+                        <p class="text-slate-400 text-sm mt-1 mb-4">
+                            Separa rápidamente Software Privativo de Libre, Usuarios Administradores de Estándar, y las 3 funciones del SO.
+                        </p>
+                    </div>
+                    <div class="flex items-center justify-between text-xs font-semibold text-cyan-400 pt-3 border-t border-slate-800">
+                        <span><i class="fa-solid fa-play mr-1"></i> Jugar Ahora</span>
+                        <span id="bestClasificador" class="text-slate-400">Mejor: 0 pts</span>
+                    </div>
+                </div>
+
+                <!-- Card Mode 2: Unidades Digitales -->
+                <div onclick="startMode('unidades')" class="glass-card glass-card-hover p-6 rounded-2xl cursor-pointer transition duration-300 flex flex-col justify-between group">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="bg-gradient-to-br from-emerald-500 to-teal-600 p-3.5 rounded-xl text-white shadow-lg group-hover:scale-110 transition">
+                            <i class="fa-solid fa-ruler-combined text-2xl"></i>
+                        </div>
+                        <span class="text-xs bg-slate-800 border border-slate-700 px-2.5 py-1 rounded-full text-emerald-400 font-semibold">
+                            Nivel 2
+                        </span>
+                    </div>
+                    <div>
+                        <h3 class="font-tech text-xl font-bold text-white group-hover:text-emerald-300 transition">
+                            2. Escala & Unidades Digitales
+                        </h3>
+                        <p class="text-slate-400 text-sm mt-1 mb-4">
+                            Ordena de menor a mayor (Bit a TB) e identifica qué miden los Hertz (Hz), Mbps y Gigabytes (GB).
+                        </p>
+                    </div>
+                    <div class="flex items-center justify-between text-xs font-semibold text-emerald-400 pt-3 border-t border-slate-800">
+                        <span><i class="fa-solid fa-play mr-1"></i> Jugar Ahora</span>
+                        <span id="bestUnidades" class="text-slate-400">Mejor: 0 pts</span>
+                    </div>
+                </div>
+
+                <!-- Card Mode 3: Simulador del SO -->
+                <div onclick="startMode('simulador')" class="glass-card glass-card-hover p-6 rounded-2xl cursor-pointer transition duration-300 flex flex-col justify-between group">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="bg-gradient-to-br from-purple-500 to-indigo-600 p-3.5 rounded-xl text-white shadow-lg group-hover:scale-110 transition">
+                            <i class="fa-solid fa-gamepad text-2xl"></i>
+                        </div>
+                        <span class="text-xs bg-slate-800 border border-slate-700 px-2.5 py-1 rounded-full text-purple-400 font-semibold">
+                            Nivel 3
+                        </span>
+                    </div>
+                    <div>
+                        <h3 class="font-tech text-xl font-bold text-white group-hover:text-purple-300 transition">
+                            3. Simulador: Director de Orquesta
+                        </h3>
+                        <p class="text-slate-400 text-sm mt-1 mb-4">
+                            Sé el Sistema Operativo. Gestiona peticiones de memoria RAM, descargas, seguridad e instalaciones en tiempo real.
+                        </p>
+                    </div>
+                    <div class="flex items-center justify-between text-xs font-semibold text-purple-400 pt-3 border-t border-slate-800">
+                        <span><i class="fa-solid fa-play mr-1"></i> Jugar Ahora</span>
+                        <span id="bestSimulador" class="text-slate-400">Mejor: 0 pts</span>
+                    </div>
+                </div>
+
+                <!-- Card Mode 4: Trivia Boss Arena -->
+                <div onclick="startMode('trivia')" class="glass-card glass-card-hover p-6 rounded-2xl cursor-pointer transition duration-300 flex flex-col justify-between group border-amber-500/20">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="bg-gradient-to-br from-amber-500 to-orange-600 p-3.5 rounded-xl text-white shadow-lg group-hover:scale-110 transition">
+                            <i class="fa-solid fa-fire text-2xl"></i>
+                        </div>
+                        <span class="text-xs bg-amber-500/20 border border-amber-500/40 px-2.5 py-1 rounded-full text-amber-300 font-semibold">
+                            Reto Final
+                        </span>
+                    </div>
+                    <div>
+                        <h3 class="font-tech text-xl font-bold text-white group-hover:text-amber-300 transition">
+                            4. Exam Boss Arena
+                        </h3>
+                        <p class="text-slate-400 text-sm mt-1 mb-4">
+                            Pon a prueba todo lo aprendido con preguntas contra el reloj, multiplicador de racha y explicación detallada.
+                        </p>
+                    </div>
+                    <div class="flex items-center justify-between text-xs font-semibold text-amber-400 pt-3 border-t border-slate-800">
+                        <span><i class="fa-solid fa-play mr-1"></i> Iniciar Desafío</span>
+                        <span id="bestTrivia" class="text-slate-400">Mejor: 0 pts</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- PANEL 2: STUDY GUIDE / FLASHCARDS -->
+        <section id="studyView" class="hidden space-y-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h2 class="font-tech text-2xl font-bold text-cyan-300">Guía Express de Estudio</h2>
+                    <p class="text-xs sm:text-sm text-slate-400">Repasa las 2 presentaciones antes de jugar</p>
+                </div>
+                <button onclick="switchTab('dashboard')" class="bg-slate-800 hover:bg-slate-700 px-3 py-1.5 rounded-lg text-xs font-medium text-slate-300">
+                    <i class="fa-solid fa-arrow-left mr-1"></i> Volver
+                </button>
+            </div>
+
+            <!-- Tab Buttons for Study Topics -->
+            <div class="flex space-x-2 border-b border-slate-800 pb-2">
+                <button onclick="switchStudyTopic('so')" id="btnStudySO" class="px-4 py-2 text-sm font-semibold rounded-lg bg-cyan-600 text-white">
+                    <i class="fa-solid fa-desktop mr-1.5"></i> 1. Sistemas Operativos
+                </button>
+                <button onclick="switchStudyTopic('medidas')" id="btnStudyMedidas" class="px-4 py-2 text-sm font-semibold rounded-lg bg-slate-800 text-slate-400 hover:text-white">
+                    <i class="fa-solid fa-gauge-high mr-1.5"></i> 2. Unidades de Medida
+                </button>
+            </div>
+
+            <!-- Study Topic 1: Sistemas Operativos -->
+            <div id="topicSO" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="glass-card p-5 rounded-xl border-l-4 border-l-cyan-500">
+                    <h3 class="font-tech text-lg font-bold text-cyan-300 mb-2">🎭 El Director de Orquesta</h3>
+                    <p class="text-sm text-slate-300 leading-relaxed mb-3">
+                        Es el software principal que controla la pantalla, memoria, teclado y procesador.
+                    </p>
+                    <div class="bg-slate-900/80 p-2.5 rounded-lg text-xs text-amber-300 font-mono">
+                        💡 Regla de oro: Tu celular sin Sistema Operativo es solo un pisapapeles caro.
+                    </div>
+                </div>
+
+                <div class="glass-card p-5 rounded-xl border-l-4 border-l-blue-500">
+                    <h3 class="font-tech text-lg font-bold text-blue-300 mb-2">🛡️ Las 3 Funciones Vitales</h3>
+                    <ul class="text-sm space-y-2 text-slate-300">
+                        <li><b>1. Traducir:</b> Convierte toques de pantalla en código binario para la máquina.</li>
+                        <li><b>2. Administrar:</b> Reparte la memoria RAM y la batería entre WhatsApp, TikTok y juegos.</li>
+                        <li><b>3. Proteger:</b> Controla accesos de seguridad y evita que las apps fallen juntas.</li>
+                    </ul>
+                </div>
+
+                <div class="glass-card p-5 rounded-xl border-l-4 border-l-purple-500">
+                    <h3 class="font-tech text-lg font-bold text-purple-300 mb-2">🍔 Software Privativo (Propietario)</h3>
+                    <p class="text-xs text-slate-400 mb-2">"La receta secreta de la hamburguesa"</p>
+                    <ul class="text-sm space-y-1.5 text-slate-300">
+                        <li>• Código cerrado y secreto. Prohibido modificar.</li>
+                        <li>• Pagas licencia de uso personal.</li>
+                        <li>• <b>Ejemplos:</b> Windows, macOS, iOS.</li>
+                    </ul>
+                </div>
+
+                <div class="glass-card p-5 rounded-xl border-l-4 border-l-emerald-500">
+                    <h3 class="font-tech text-lg font-bold text-emerald-300 mb-2">🍕 Software Libre (Open Source)</h3>
+                    <p class="text-xs text-slate-400 mb-2">"La receta de pizza pública en internet"</p>
+                    <ul class="text-sm space-y-1.5 text-slate-300">
+                        <li>• Código visible, modificable y gratuito.</li>
+                        <li>• Puedes crear tu propia versión.</li>
+                        <li>• <b>Ejemplos:</b> GNU/Linux (Ubuntu), Android (núcleo).</li>
+                    </ul>
+                </div>
+
+                <div class="glass-card p-5 rounded-xl border-l-4 border-l-amber-500 md:col-span-2">
+                    <h3 class="font-tech text-lg font-bold text-amber-300 mb-2">👑 Administrador vs 👤 Estándar</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-slate-300 mt-2">
+                        <div class="bg-slate-900/60 p-3 rounded-lg border border-slate-800">
+                            <span class="font-bold text-amber-400">Usuario Administrador:</span> Control total, tiene la llave maestra. Puede instalar/borrar programas, juegos, controladores y cambiar contraseñas.
+                        </div>
+                        <div class="bg-slate-900/60 p-3 rounded-lg border border-slate-800">
+                            <span class="font-bold text-slate-300">Usuario Estándar:</span> Modo estudiante / invitado. Usa programas existentes (Word, navegador) pero NO puede instalar software ni cambiar configuraciones críticas.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Study Topic 2: Unidades de Medida -->
+            <div id="topicMedidas" class="hidden grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="glass-card p-5 rounded-xl border-t-4 border-t-indigo-500">
+                    <div class="text-indigo-400 text-2xl mb-2"><i class="fa-solid fa-hard-drive"></i></div>
+                    <h3 class="font-tech text-lg font-bold text-indigo-300 mb-1">1. Almacenamiento</h3>
+                    <p class="text-xs text-slate-400 mb-3">🎒 "Es como tu mochila o locker"</p>
+                    <p class="text-xs text-slate-300 mb-3">Mide el espacio disponible para guardar fotos, canciones, apps y juegos.</p>
+                    <div class="text-xs font-mono bg-slate-900 p-2.5 rounded-lg text-indigo-300 space-y-1">
+                        <div><b>Bit:</b> 0 o 1</div>
+                        <div><b>Byte:</b> 8 bits (1 letra)</div>
+                        <div><b>KB:</b> Texto breve</div>
+                        <div><b>MB:</b> Canción MP3 / foto HD</div>
+                        <div><b>GB:</b> ~1,000 MB (juegos pesados)</div>
+                        <div><b>TB:</b> ~1,000 GB (disco duro consola)</div>
+                    </div>
+                </div>
+
+                <div class="glass-card p-5 rounded-xl border-t-4 border-t-cyan-500">
+                    <div class="text-cyan-400 text-2xl mb-2"><i class="fa-solid fa-wifi"></i></div>
+                    <h3 class="font-tech text-lg font-bold text-cyan-300 mb-1">2. Velocidad de Red</h3>
+                    <p class="text-xs text-slate-400 mb-3">🌊 "Velocidad del agua en un tubo"</p>
+                    <p class="text-xs text-slate-300 mb-3">Mide qué tan rápido viajan los datos por segundo. Determina si tienes lag en Fortnite.</p>
+                    <div class="text-xs font-mono bg-slate-900 p-2.5 rounded-lg text-cyan-300 space-y-2">
+                        <div><b>Mbps:</b> Megabits por segundo (Wi-Fi de casa, ej. 100 Mbps).</div>
+                        <div><b>Gbps:</b> Gigabits por segundo (Fibra óptica avanzada, 1 Gbps = 1,000 Mbps).</div>
+                    </div>
+                </div>
+
+                <div class="glass-card p-5 rounded-xl border-t-4 border-t-emerald-500">
+                    <div class="text-emerald-400 text-2xl mb-2"><i class="fa-solid fa-microchip"></i></div>
+                    <h3 class="font-tech text-lg font-bold text-emerald-300 mb-1">3. Procesamiento</h3>
+                    <p class="text-xs text-slate-400 mb-3">🧠 "El ritmo cardíaco del chip"</p>
+                    <p class="text-xs text-slate-300 mb-3">Mide cuántas operaciones matemáticas por segundo resuelve el procesador.</p>
+                    <div class="text-xs font-mono bg-slate-900 p-2.5 rounded-lg text-emerald-300 space-y-1.5">
+                        <div><b>Hertz (Hz):</b> 1 operación/seg.</div>
+                        <div><b>Megahertz (MHz):</b> 1 millón op/seg.</div>
+                        <div><b>Gigahertz (GHz):</b> 1,000 millones op/seg (Estándar CPUs actuales 2.0-4.5 GHz).</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PANEL 3: GAME MODE 1 - CLASIFICADOR CYBER -->
+        <section id="clasificadorView" class="hidden space-y-6">
+            <!-- Header Bar -->
+            <div class="flex items-center justify-between glass-card p-4 rounded-xl">
+                <div>
+                    <h2 class="font-tech text-xl font-bold text-cyan-300">1. Clasificador Cyber</h2>
+                    <p class="text-xs text-slate-400">Asigna la tarjeta a su categoría correcta</p>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="text-right">
+                        <span class="text-xs text-slate-400 block">Puntos Modo</span>
+                        <span id="clasificScore" class="font-tech font-bold text-cyan-400 text-lg">0</span>
+                    </div>
+                    <button onclick="switchTab('dashboard')" class="bg-slate-800 hover:bg-slate-700 px-3 py-1.5 rounded-lg text-xs font-semibold">
+                        Salir
+                    </button>
+                </div>
+            </div>
+
+            <!-- Card Arena -->
+            <div class="max-w-xl mx-auto space-y-6">
+                <!-- Main Flash Item -->
+                <div id="clasificCard" class="glass-card p-8 rounded-2xl text-center border-2 border-cyan-500/40 neon-glow-blue transition duration-300">
+                    <span id="clasificSubtag" class="text-xs font-semibold uppercase tracking-widest text-cyan-400 bg-cyan-950/80 px-3 py-1 rounded-full border border-cyan-800">
+                        Categorización
+                    </span>
+                    <h3 id="clasificTitle" class="font-tech text-2xl sm:text-3xl font-bold text-white mt-4 mb-2">
+                        Windows 11
+                    </h3>
+                    <p id="clasificDesc" class="text-slate-300 text-sm">
+                        Sistema operativo desarrollado por Microsoft que requiere pago de licencia.
+                    </p>
+                </div>
+
+                <!-- Choice Buttons Target -->
+                <div id="clasificButtons" class="grid grid-cols-2 gap-3 sm:gap-4">
+                    <!-- Dynamic Buttons Injected by JS -->
+                </div>
+
+                <!-- Feedback Toast -->
+                <div id="clasificFeedback" class="hidden text-center p-3 rounded-xl text-sm font-semibold"></div>
+            </div>
+        </section>
+
+        <!-- PANEL 4: GAME MODE 2 - ESCALA DE UNIDADES -->
+        <section id="unidadesView" class="hidden space-y-6">
+            <div class="flex items-center justify-between glass-card p-4 rounded-xl">
+                <div>
+                    <h2 class="font-tech text-xl font-bold text-emerald-300">2. Escala & Unidades Digitales</h2>
+                    <p class="text-xs text-slate-400">Acomoda o relaciona las unidades de medida</p>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="text-right">
+                        <span class="text-xs text-slate-400 block">Puntos Modo</span>
+                        <span id="unidadesScore" class="font-tech font-bold text-emerald-400 text-lg">0</span>
+                    </div>
+                    <button onclick="switchTab('dashboard')" class="bg-slate-800 hover:bg-slate-700 px-3 py-1.5 rounded-lg text-xs font-semibold">
+                        Salir
+                    </button>
+                </div>
+            </div>
+
+            <!-- Subgame Switcher Container -->
+            <div id="unidadesContent" class="max-w-2xl mx-auto space-y-6">
+                <!-- Injected via JavaScript -->
+            </div>
+        </section>
+
+        <!-- PANEL 5: GAME MODE 3 - SIMULADOR DEL SISTEMA OPERATIVO -->
+        <section id="simuladorView" class="hidden space-y-6">
+            <div class="flex items-center justify-between glass-card p-4 rounded-xl">
+                <div>
+                    <h2 class="font-tech text-xl font-bold text-purple-300">3. Director de Orquesta (Simulador)</h2>
+                    <p class="text-xs text-slate-400">Atiende las peticiones del sistema correctamente</p>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="text-right">
+                        <span class="text-xs text-slate-400 block">Puntos Modo</span>
+                        <span id="simScore" class="font-tech font-bold text-purple-400 text-lg">0</span>
+                    </div>
+                    <button onclick="switchTab('dashboard')" class="bg-slate-800 hover:bg-slate-700 px-3 py-1.5 rounded-lg text-xs font-semibold">
+                        Salir
+                    </button>
+                </div>
+            </div>
+
+            <!-- Dashboard Control Screen -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <!-- Status Monitor -->
+                <div class="glass-card p-4 rounded-xl space-y-3">
+                    <h3 class="font-tech text-sm font-bold text-slate-300 uppercase tracking-wider flex items-center">
+                        <i class="fa-solid fa-heart-pulse text-purple-400 mr-2"></i> Estado del Sistema
+                    </h3>
+                    
+                    <div>
+                        <div class="flex justify-between text-xs mb-1">
+                            <span>Memoria RAM</span>
+                            <span id="ramText" class="text-purple-300 font-bold">40%</span>
+                        </div>
+                        <div class="w-full bg-slate-800 h-2.5 rounded-full overflow-hidden">
+                            <div id="ramBar" class="bg-purple-500 h-full w-[40%] transition-all duration-300"></div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between text-xs mb-1">
+                            <span>Seguridad</span>
+                            <span id="secText" class="text-emerald-400 font-bold">100%</span>
+                        </div>
+                        <div class="w-full bg-slate-800 h-2.5 rounded-full overflow-hidden">
+                            <div id="secBar" class="bg-emerald-500 h-full w-[100%] transition-all duration-300"></div>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-900/80 p-3 rounded-lg text-xs text-slate-400">
+                        <i class="fa-solid fa-circle-info text-cyan-400 mr-1"></i>
+                        Recuerda: El SO traduce toques, administra RAM/batería y protege contra fallos.
+                    </div>
+                </div>
+
+                <!-- Live Request Console -->
+                <div class="md:col-span-2 glass-card p-6 rounded-xl flex flex-col justify-between space-y-4">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-xs bg-purple-900/60 text-purple-300 px-2.5 py-1 rounded-md border border-purple-700 font-mono">
+                                PETICIÓN EN COLA #<span id="simReqNum">1</span>
+                            </span>
+                            <span id="simTimer" class="text-xs font-bold text-amber-400 font-mono">
+                                ⏱️ 15s
+                            </span>
+                        </div>
+                        <h3 id="simReqTitle" class="font-tech text-xl font-bold text-white mb-2">
+                            WhatsApp solicita reproducir un audio largo
+                        </h3>
+                        <p id="simReqDesc" class="text-slate-300 text-sm">
+                            El usuario tocó la pantalla para presionar 'Play'. ¿Qué función principal debe activarse primero?
+                        </p>
+                    </div>
+
+                    <div id="simActionButtons" class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                        <!-- Action Buttons inserted dynamically -->
+                    </div>
+
+                    <div id="simFeedback" class="hidden text-center p-2.5 rounded-lg text-xs font-semibold"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PANEL 6: GAME MODE 4 - EXAM BOSS ARENA (TRIVIA) -->
+        <section id="triviaView" class="hidden space-y-6">
+            <div class="flex items-center justify-between glass-card p-4 rounded-xl">
+                <div>
+                    <h2 class="font-tech text-xl font-bold text-amber-300">4. Exam Boss Arena</h2>
+                    <p class="text-xs text-slate-400">Demuestra tu nivel previo al examen final</p>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="text-right">
+                        <span class="text-xs text-slate-400 block">Combo Multiplicador</span>
+                        <span id="triviaStreak" class="font-tech font-bold text-amber-400 text-lg">x1 🔥</span>
+                    </div>
+                    <button onclick="switchTab('dashboard')" class="bg-slate-800 hover:bg-slate-700 px-3 py-1.5 rounded-lg text-xs font-semibold">
+                        Salir
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quiz Arena Container -->
+            <div class="max-w-2xl mx-auto glass-card p-6 sm:p-8 rounded-2xl relative overflow-hidden">
+                <!-- Progress bar -->
+                <div class="w-full bg-slate-800 h-2 rounded-full mb-6 overflow-hidden">
+                    <div id="triviaProgressBar" class="bg-gradient-to-r from-amber-500 to-orange-500 h-full w-0 transition-all duration-300"></div>
+                </div>
+
+                <div class="flex justify-between items-center text-xs text-slate-400 mb-2 font-mono">
+                    <span id="triviaQuestionIndex">Pregunta 1 de 10</span>
+                    <span id="triviaScore" class="text-amber-400 font-bold">Puntos: 0</span>
+                </div>
+
+                <h3 id="triviaQuestionText" class="font-tech text-xl sm:text-2xl font-bold text-white mb-6">
+                    ¿Cuál de las siguientes afirmaciones sobre el software privativo es CORRECTA?
+                </h3>
+
+                <div id="triviaOptionsContainer" class="space-y-3">
+                    <!-- Dynamic Answer Buttons -->
+                </div>
+
+                <div id="triviaFeedback" class="hidden mt-6 p-4 rounded-xl text-sm leading-relaxed"></div>
+
+                <button id="triviaNextBtn" onclick="nextTriviaQuestion()" class="hidden w-full mt-4 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white font-bold py-3 rounded-xl shadow-lg transition">
+                    Siguiente Pregunta <i class="fa-solid fa-arrow-right ml-2"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- PANEL 7: RESULTS / CERTIFICATE MODAL -->
+        <div id="resultsModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+            <div class="glass-card max-w-lg w-full p-6 sm:p-8 rounded-2xl border border-slate-700 text-center space-y-5 animate-pulse-glow">
+                <div class="inline-block p-4 bg-gradient-to-tr from-amber-500 to-yellow-400 rounded-2xl text-slate-950 shadow-lg text-4xl">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+
+                <h2 class="font-tech text-2xl sm:text-3xl font-extrabold text-white">
+                    ¡Repaso Completado!
+                </h2>
+
+                <p class="text-slate-300 text-sm">
+                    Has puesto a prueba tus conocimientos en Sistemas Operativos y Unidades de Medida.
+                </p>
+
+                <div class="bg-slate-900/90 p-4 rounded-xl border border-slate-800 grid grid-cols-2 gap-4">
+                    <div>
+                        <span class="text-xs text-slate-400 block">Puntaje Total</span>
+                        <span id="finalScoreText" class="font-tech text-2xl font-bold text-cyan-400">0</span>
+                    </div>
+                    <div>
+                        <span class="text-xs text-slate-400 block">Calificación Estimada</span>
+                        <span id="finalGradeText" class="font-tech text-2xl font-bold text-amber-400">10 / 10</span>
+                    </div>
+                </div>
+
+                <div id="finalFeedbackList" class="text-left text-xs text-slate-300 space-y-1.5 bg-slate-900/50 p-3 rounded-lg">
+                    <!-- Dynamic Strengths and Tips -->
+                </div>
+
+                <div class="flex space-x-3 pt-2">
+                    <button onclick="closeResultsModal(); switchTab('dashboard');" class="flex-1 bg-slate-800 hover:bg-slate-700 text-white py-2.5 rounded-xl text-sm font-semibold transition">
+                        Menú Principal
+                    </button>
+                    <button onclick="closeResultsModal(); startMode('trivia');" class="flex-1 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white py-2.5 rounded-xl text-sm font-semibold transition">
+                        Reintentar Trivia
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Custom Notice Modal (Replaces alert) -->
+        <div id="noticeModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+            <div class="glass-card max-w-md w-full p-6 sm:p-8 rounded-2xl border border-slate-700 text-center space-y-4">
+                <div id="noticeIcon" class="text-4xl text-cyan-400"><i class="fa-solid fa-circle-info"></i></div>
+                <h3 id="noticeTitle" class="font-tech text-xl sm:text-2xl font-bold text-white">Aviso</h3>
+                <p id="noticeMsg" class="text-sm text-slate-300 leading-relaxed">Mensaje del sistema...</p>
+                <button onclick="closeNoticeModal()" class="w-full bg-cyan-600 hover:bg-cyan-500 text-white font-semibold py-2.5 rounded-xl transition">
+                    Entendido
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="border-t border-slate-900 py-4 px-4 text-center text-xs text-slate-500">
+        <p>Informática Básica • Preparatoria 9 — Repaso Dinámico de Sistemas Operativos y Unidades de Medida Digitales</p>
+    </footer>
+
+    <script>
+        let noticeCallback = null;
+        function showNoticeModal(title, msg, iconClass = "fa-solid fa-circle-info text-cyan-400", onOk = null) {
+            document.getElementById('noticeTitle').innerText = title;
+            document.getElementById('noticeMsg').innerText = msg;
+            const iconEl = document.getElementById('noticeIcon');
+            if (iconEl) iconEl.className = "text-4xl " + iconClass;
+            noticeCallback = onOk;
+            document.getElementById('noticeModal').classList.remove('hidden');
+        }
+
+        function closeNoticeModal() {
+            document.getElementById('noticeModal').classList.add('hidden');
+            if (noticeCallback) {
+                const cb = noticeCallback;
+                noticeCallback = null;
+                cb();
+            }
+        }
+
+        // Audio Synthesizer using Web Audio API
+        let audioEnabled = true;
+        let audioCtx = null;
+
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        function playTone(freq, type, duration, vol = 0.1) {
+            if (!audioEnabled) return;
+            try {
+                initAudio();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                gain.gain.setValueAtTime(vol, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + duration);
+            } catch (e) {
+                console.log("Audio non-fatal error", e);
+            }
+        }
+
+        function playSfx(type) {
+            if (type === 'correct') {
+                playTone(523.25, 'sine', 0.15, 0.1); // C5
+                setTimeout(() => playTone(659.25, 'sine', 0.2, 0.1), 100); // E5
+            } else if (type === 'wrong') {
+                playTone(220, 'sawtooth', 0.2, 0.1); // A3
+                setTimeout(() => playTone(180, 'sawtooth', 0.25, 0.1), 150);
+            } else if (type === 'click') {
+                playTone(800, 'triangle', 0.05, 0.05);
+            } else if (type === 'win') {
+                playTone(523.25, 'sine', 0.1, 0.1);
+                setTimeout(() => playTone(659.25, 'sine', 0.1, 0.1), 100);
+                setTimeout(() => playTone(783.99, 'sine', 0.1, 0.1), 200);
+                setTimeout(() => playTone(1046.50, 'sine', 0.3, 0.12), 300);
+            }
+        }
+
+        function toggleAudio() {
+            audioEnabled = !audioEnabled;
+            const icon = document.getElementById('audioIcon');
+            if (audioEnabled) {
+                icon.className = 'fa-solid fa-volume-high';
+                playSfx('click');
+            } else {
+                icon.className = 'fa-solid fa-volume-xmark text-slate-500';
+            }
+        }
+
+        // Global Scores
+        let scores = {
+            clasificador: 0,
+            unidades: 0,
+            simulador: 0,
+            trivia: 0
+        };
+
+        function updateGlobalScoreDisplay() {
+            const total = scores.clasificador + scores.unidades + scores.simulador + scores.trivia;
+            document.getElementById('globalScore').innerText = total;
+            document.getElementById('bestClasificador').innerText = `Mejor: ${scores.clasificador} pts`;
+            document.getElementById('bestUnidades').innerText = `Mejor: ${scores.unidades} pts`;
+            document.getElementById('bestSimulador').innerText = `Mejor: ${scores.simulador} pts`;
+            document.getElementById('bestTrivia').innerText = `Mejor: ${scores.trivia} pts`;
+        }
+
+        // Navigation Switcher
+        function switchTab(viewId) {
+            playSfx('click');
+            const views = ['dashboardView', 'studyView', 'clasificadorView', 'unidadesView', 'simuladorView', 'triviaView'];
+            views.forEach(v => {
+                const el = document.getElementById(v);
+                if (el) el.classList.add('hidden');
+            });
+            const target = document.getElementById(viewId + 'View');
+            if (target) target.classList.remove('hidden');
+        }
+
+        function switchStudyTopic(topic) {
+            playSfx('click');
+            document.getElementById('topicSO').classList.add('hidden');
+            document.getElementById('topicMedidas').classList.add('hidden');
+            document.getElementById('btnStudySO').className = "px-4 py-2 text-sm font-semibold rounded-lg bg-slate-800 text-slate-400 hover:text-white";
+            document.getElementById('btnStudyMedidas').className = "px-4 py-2 text-sm font-semibold rounded-lg bg-slate-800 text-slate-400 hover:text-white";
+
+            if (topic === 'so') {
+                document.getElementById('topicSO').classList.remove('hidden');
+                document.getElementById('btnStudySO').className = "px-4 py-2 text-sm font-semibold rounded-lg bg-cyan-600 text-white";
+            } else {
+                document.getElementById('topicMedidas').classList.remove('hidden');
+                document.getElementById('btnStudyMedidas').className = "px-4 py-2 text-sm font-semibold rounded-lg bg-emerald-600 text-white";
+            }
+        }
+
+        function startMode(mode) {
+            switchTab(mode);
+            if (mode === 'clasificador') initClasificadorMode();
+            if (mode === 'unidades') initUnidadesMode();
+            if (mode === 'simulador') initSimuladorMode();
+            if (mode === 'trivia') initTriviaMode();
+        }
+
+        // MODE 1: CLASIFICADOR CYBER
+        const clasificDatabase = [
+            {
+                title: "Windows 11",
+                desc: "Sistema operativo para computadoras creado por Microsoft.",
+                category: "Software Privativo",
+                subtag: "Tipo de Software",
+                options: ["Software Privativo", "Software Libre"]
+            },
+            {
+                title: "Ubuntu (Linux)",
+                desc: "Sistema operativo de código abierto utilizado en servidores y NASA.",
+                category: "Software Libre",
+                subtag: "Tipo de Software",
+                options: ["Software Privativo", "Software Libre"]
+            },
+            {
+                title: "Instalar nuevos controladores o juegos",
+                desc: "Acción que requiere cambiar archivos de sistema y registros.",
+                category: "Usuario Administrador",
+                subtag: "Control de Acceso",
+                options: ["Usuario Administrador", "Usuario Estándar"]
+            },
+            {
+                title: "Usar Google Chrome para hacer la tarea",
+                desc: "Navegar por internet usando aplicaciones preinstaladas.",
+                category: "Usuario Estándar",
+                subtag: "Control de Acceso",
+                options: ["Usuario Administrador", "Usuario Estándar"]
+            },
+            {
+                title: "Android (Núcleo)",
+                desc: "Sistema que marcas como Samsung o Xiaomi modifican libremente.",
+                category: "Software Libre",
+                subtag: "Tipo de Software",
+                options: ["Software Privativo", "Software Libre"]
+            },
+            {
+                title: "macOS e iOS",
+                desc: "Sistemas exclusivos de computadoras Mac e iPhone de Apple.",
+                category: "Software Privativo",
+                subtag: "Tipo de Software",
+                options: ["Software Privativo", "Software Libre"]
+            },
+            {
+                title: "Repartir la memoria RAM entre WhatsApp y TikTok",
+                desc: "Evita que las aplicaciones se queden sin memoria mientras se ejecutan.",
+                category: "Administrar Recursos",
+                subtag: "Función del SO",
+                options: ["Traducir", "Administrar Recursos", "Proteger"]
+            },
+            {
+                title: "Convertir tus toques en la pantalla a Código Binario",
+                desc: "Hace de puente entre tus dedos y el procesador del teléfono.",
+                category: "Traducir",
+                subtag: "Función del SO",
+                options: ["Traducir", "Administrar Recursos", "Proteger"]
+            },
+            {
+                title: "Evitar que un virus infecte todo el sistema",
+                desc: "Aísla fallos de apps y exige permisos de acceso.",
+                category: "Proteger",
+                subtag: "Función del SO",
+                options: ["Traducir", "Administrar Recursos", "Proteger"]
+            }
+        ];
+
+        let clasificIndex = 0;
+        let clasificScoreVal = 0;
+
+        function initClasificadorMode() {
+            clasificIndex = 0;
+            clasificScoreVal = 0;
+            document.getElementById('clasificScore').innerText = clasificScoreVal;
+            renderClasificItem();
+        }
+
+        function renderClasificItem() {
+            if (clasificIndex >= clasificDatabase.length) {
+                // Done with mode 1
+                playSfx('win');
+                scores.clasificador = Math.max(scores.clasificador, clasificScoreVal);
+                updateGlobalScoreDisplay();
+                showNoticeModal("¡Excelente Trabajo!", `Completaste el Clasificador Cyber con ${clasificScoreVal} puntos.`, "fa-solid fa-circle-check text-cyan-400", () => switchTab('dashboard'));
+                return;
+            }
+
+            const item = clasificDatabase[clasificIndex];
+            document.getElementById('clasificSubtag').innerText = item.subtag;
+            document.getElementById('clasificTitle').innerText = item.title;
+            document.getElementById('clasificDesc').innerText = item.desc;
+
+            const btnContainer = document.getElementById('clasificButtons');
+            btnContainer.innerHTML = '';
+
+            item.options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = "glass-card hover:bg-cyan-600/30 border border-slate-700 hover:border-cyan-400 p-4 rounded-xl text-center text-sm font-semibold text-slate-200 transition";
+                btn.innerText = opt;
+                btn.onclick = () => checkClasificAnswer(opt, item.category);
+                btnContainer.appendChild(btn);
+            });
+
+            document.getElementById('clasificFeedback').className = "hidden";
+        }
+
+        function checkClasificAnswer(selected, correct) {
+            const feedback = document.getElementById('clasificFeedback');
+            feedback.classList.remove('hidden');
+
+            if (selected === correct) {
+                playSfx('correct');
+                clasificScoreVal += 100;
+                document.getElementById('clasificScore').innerText = clasificScoreVal;
+                feedback.className = "p-3 rounded-xl text-sm font-semibold bg-emerald-950/80 text-emerald-300 border border-emerald-700";
+                feedback.innerHTML = `<i class="fa-solid fa-circle-check mr-1"></i> ¡Correcto! ${selected}`;
+            } else {
+                playSfx('wrong');
+                feedback.className = "p-3 rounded-xl text-sm font-semibold bg-rose-950/80 text-rose-300 border border-rose-700";
+                feedback.innerHTML = `<i class="fa-solid fa-circle-xmark mr-1"></i> Incorrecto. La respuesta es: ${correct}`;
+            }
+
+            clasificIndex++;
+            setTimeout(renderClasificItem, 1300);
+        }
+
+        // MODE 2: UNIDADES DIGITALES
+        const unidadesCategoryDatabase = [
+            {
+                measure: "128 GB",
+                desc: "Espacio para guardar fotos, videos y apps en un smartphone.",
+                correctCategory: "Almacenamiento",
+                explain: "Los GB (Gigabytes) miden capacidad de almacenamiento de discos y memorias."
+            },
+            {
+                measure: "200 Mbps",
+                desc: "Velocidad de descarga contratada con tu proveedor de Wi-Fi.",
+                correctCategory: "Velocidad de Red",
+                explain: "Mbps (Megabits por segundo) mide la velocidad con la que viajan los datos en la red."
+            },
+            {
+                measure: "3.2 GHz",
+                desc: "Frecuencia de procesamiento del microprocesador de una computadora.",
+                correctCategory: "Procesamiento",
+                explain: "Los GHz (Gigahertz) miden cuántos miles de millones de ciclos por segundo ejecuta el procesador."
+            },
+            {
+                measure: "1 TB",
+                desc: "Capacidad del disco duro en una consola de videojuegos moderna.",
+                correctCategory: "Almacenamiento",
+                explain: "1 Terabyte (TB) equivale a aproximadamente 1,000 Gigabytes de almacenamiento."
+            },
+            {
+                measure: "1 Gbps",
+                desc: "Conexión de Fibra Óptica avanzada para internet de alta velocidad.",
+                correctCategory: "Velocidad de Red",
+                explain: "1 Gbps (Gigabit por segundo) equivale a 1,000 Mbps de velocidad de transferencia de red."
+            },
+            {
+                measure: "2.4 GHz",
+                desc: "Frecuencia de reloj en el chip principal de un smartphone.",
+                correctCategory: "Procesamiento",
+                explain: "La velocidad de procesamiento de los microchips se mide en Hertz (Hz / MHz / GHz)."
+            }
+        ];
+
+        const unidadesComparisonDatabase = [
+            {
+                question: "¿Qué cantidad representa un MAYOR almacenamiento?",
+                optA: "300 MB",
+                optB: "100 GB",
+                correct: "B",
+                explain: "¡100 GB es mucho mayor! 100 GB equivalen a 100,000 MB aprox."
+            },
+            {
+                question: "¿Qué velocidad de red es MÁS RÁPIDA?",
+                optA: "1,000 Mbps",
+                optB: "10 Gbps",
+                correct: "B",
+                explain: "10 Gbps equivale a 10,000 Mbps (10 veces más rápida que 1,000 Mbps)."
+            },
+            {
+                question: "¿Qué frecuencia de procesador es MÁS RÁPIDA?",
+                optA: "2.5 GHz",
+                optB: "800 MHz",
+                correct: "A",
+                explain: "2.5 GHz equivale a 2,500 MHz, superando por mucho a 800 MHz."
+            },
+            {
+                question: "¿Qué capacidad de disco duro es MAYOR?",
+                optA: "1 TB",
+                optB: "500 GB",
+                correct: "A",
+                explain: "1 Terabyte (TB) equivale a aprox. 1,000 GB, el doble de 500 GB."
+            },
+            {
+                question: "¿Qué velocidad de internet es MAYOR?",
+                optA: "50 Mbps",
+                optB: "1 Gbps",
+                correct: "B",
+                explain: "1 Gbps equivale a 1,000 Mbps, mucho más veloz que 50 Mbps."
+            }
+        ];
+
+        let unidadesCatIndex = 0;
+        let unidadesCompIndex = 0;
+        let unidadesScoreVal = 0;
+        let unidadesStage = 1;
+
+        function initUnidadesMode() {
+            unidadesCatIndex = 0;
+            unidadesCompIndex = 0;
+            unidadesScoreVal = 0;
+            unidadesStage = 1;
+            document.getElementById('unidadesScore').innerText = unidadesScoreVal;
+            renderUnidadesStage();
+        }
+
+        function renderUnidadesStage() {
+            const container = document.getElementById('unidadesContent');
+            container.innerHTML = '';
+
+            if (unidadesStage === 1) {
+                if (unidadesCatIndex >= unidadesCategoryDatabase.length) {
+                    unidadesStage = 2;
+                    renderUnidadesStage();
+                    return;
+                }
+
+                const item = unidadesCategoryDatabase[unidadesCatIndex];
+                container.innerHTML = `
+                    <div class="glass-card p-6 rounded-2xl space-y-5 max-w-xl mx-auto border-2 border-emerald-500/40 neon-glow-purple">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-semibold text-emerald-400 bg-emerald-950/80 px-3 py-1 rounded-full border border-emerald-800">
+                                Etapa 1 de 3: Identifica la Familia
+                            </span>
+                            <span class="text-xs text-slate-400 font-mono">Pregunta ${unidadesCatIndex + 1} de ${unidadesCategoryDatabase.length}</span>
+                        </div>
+
+                        <div class="text-center py-2">
+                            <div class="font-tech text-3xl sm:text-4xl font-extrabold text-emerald-300 font-mono tracking-wider">
+                                ${item.measure}
+                            </div>
+                            <p class="text-slate-300 text-sm mt-3 px-2">
+                                ${item.desc}
+                            </p>
+                        </div>
+
+                        <div class="text-xs text-center font-semibold text-slate-400 uppercase tracking-widest">
+                            Selecciona el tipo de medida correcto:
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                            <button onclick="checkUnidadesCategory('Almacenamiento')" class="glass-card hover:bg-indigo-600/30 border border-slate-700 hover:border-indigo-400 p-3.5 rounded-xl text-center text-xs font-bold text-slate-200 transition flex flex-col items-center gap-1.5">
+                                <i class="fa-solid fa-hard-drive text-indigo-400 text-lg"></i>
+                                <span>Almacenamiento</span>
+                            </button>
+                            <button onclick="checkUnidadesCategory('Velocidad de Red')" class="glass-card hover:bg-cyan-600/30 border border-slate-700 hover:border-cyan-400 p-3.5 rounded-xl text-center text-xs font-bold text-slate-200 transition flex flex-col items-center gap-1.5">
+                                <i class="fa-solid fa-wifi text-cyan-400 text-lg"></i>
+                                <span>Velocidad Red</span>
+                            </button>
+                            <button onclick="checkUnidadesCategory('Procesamiento')" class="glass-card hover:bg-emerald-600/30 border border-slate-700 hover:border-emerald-400 p-3.5 rounded-xl text-center text-xs font-bold text-slate-200 transition flex flex-col items-center gap-1.5">
+                                <i class="fa-solid fa-microchip text-emerald-400 text-lg"></i>
+                                <span>Procesamiento</span>
+                            </button>
+                        </div>
+
+                        <div id="unidadesFeed" class="hidden text-center p-3 rounded-xl text-xs font-semibold"></div>
+                    </div>
+                `;
+            } else if (unidadesStage === 2) {
+                if (unidadesCompIndex >= unidadesComparisonDatabase.length) {
+                    unidadesStage = 3;
+                    renderUnidadesStage();
+                    return;
+                }
+
+                const item = unidadesComparisonDatabase[unidadesCompIndex];
+                container.innerHTML = `
+                    <div class="glass-card p-6 rounded-2xl space-y-5 max-w-xl mx-auto border-2 border-emerald-500/40 neon-glow-purple">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-semibold text-emerald-400 bg-emerald-950/80 px-3 py-1 rounded-full border border-emerald-800">
+                                Etapa 2 de 3: Comparación de Medidas
+                            </span>
+                            <span class="text-xs text-slate-400 font-mono">Reto ${unidadesCompIndex + 1} de ${unidadesComparisonDatabase.length}</span>
+                        </div>
+
+                        <div class="text-center py-2">
+                            <h3 class="font-tech text-xl font-bold text-white mb-2">
+                                ${item.question}
+                            </h3>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <button onclick="checkUnidadesComparison('A')" class="glass-card hover:bg-emerald-600/30 border-2 border-slate-700 hover:border-emerald-400 p-6 rounded-xl text-center font-tech font-extrabold text-xl text-emerald-300 transition">
+                                ${item.optA}
+                            </button>
+                            <button onclick="checkUnidadesComparison('B')" class="glass-card hover:bg-emerald-600/30 border-2 border-slate-700 hover:border-emerald-400 p-6 rounded-xl text-center font-tech font-extrabold text-xl text-emerald-300 transition">
+                                ${item.optB}
+                            </button>
+                        </div>
+
+                        <div id="compFeed" class="hidden text-center p-3 rounded-xl text-xs font-semibold"></div>
+                    </div>
+                `;
+            } else if (unidadesStage === 3) {
+                container.innerHTML = `
+                    <div class="glass-card p-6 sm:p-8 rounded-2xl space-y-5 max-w-xl mx-auto border-2 border-emerald-500/40">
+                        <span class="text-xs font-semibold text-emerald-400 bg-emerald-950 px-3 py-1 rounded-full border border-emerald-800">
+                            Etapa 3 de 3: Escala de Menor a Mayor
+                        </span>
+                        <h3 class="font-tech text-xl font-bold text-white">
+                            ¿Cuál es el orden CORRECTO de menor a mayor capacidad de almacenamiento?
+                        </h3>
+                        
+                        <div class="space-y-3">
+                            <button onclick="checkScale(false)" class="w-full text-left glass-card hover:bg-slate-800 p-4 rounded-xl text-xs sm:text-sm font-mono text-slate-200 border border-slate-700">
+                                A) Byte ➔ Bit ➔ MB ➔ KB ➔ TB ➔ GB
+                            </button>
+                            <button onclick="checkScale(true)" class="w-full text-left glass-card hover:bg-emerald-950/40 border border-emerald-500/50 p-4 rounded-xl text-xs sm:text-sm font-mono text-emerald-300">
+                                B) Bit ➔ Byte ➔ KB ➔ MB ➔ GB ➔ TB
+                            </button>
+                            <button onclick="checkScale(false)" class="w-full text-left glass-card hover:bg-slate-800 p-4 rounded-xl text-xs sm:text-sm font-mono text-slate-200 border border-slate-700">
+                                C) Bit ➔ KB ➔ Byte ➔ GB ➔ MB ➔ TB
+                            </button>
+                        </div>
+                        <div id="scaleFeed" class="hidden text-center p-3 rounded-xl text-xs font-semibold"></div>
+                    </div>
+                `;
+            }
+        }
+
+        function checkUnidadesComparison(selectedOpt) {
+            const item = unidadesComparisonDatabase[unidadesCompIndex];
+            const feed = document.getElementById('compFeed');
+            if (feed) feed.classList.remove('hidden');
+
+            if (selectedOpt === item.correct) {
+                playSfx('correct');
+                unidadesScoreVal += 100;
+                document.getElementById('unidadesScore').innerText = unidadesScoreVal;
+                if (feed) {
+                    feed.className = "p-3 rounded-xl text-xs font-semibold bg-emerald-950/90 text-emerald-300 border border-emerald-700";
+                    feed.innerHTML = `<i class="fa-solid fa-circle-check mr-1"></i> <b>¡Correcto!</b> ${item.explain}`;
+                }
+            } else {
+                playSfx('wrong');
+                if (feed) {
+                    feed.className = "p-3 rounded-xl text-xs font-semibold bg-rose-950/90 text-rose-300 border border-rose-700";
+                    feed.innerHTML = `<i class="fa-solid fa-circle-xmark mr-1"></i> <b>Incorrecto.</b> ${item.explain}`;
+                }
+            }
+
+            unidadesCompIndex++;
+            setTimeout(renderUnidadesStage, 1800);
+        }
+
+        function checkUnidadesCategory(selectedCat) {
+            const item = unidadesCategoryDatabase[unidadesCatIndex];
+            const feed = document.getElementById('unidadesFeed');
+            if (feed) feed.classList.remove('hidden');
+
+            if (selectedCat === item.correctCategory) {
+                playSfx('correct');
+                unidadesScoreVal += 100;
+                document.getElementById('unidadesScore').innerText = unidadesScoreVal;
+                if (feed) {
+                    feed.className = "p-3 rounded-xl text-xs font-semibold bg-emerald-950/90 text-emerald-300 border border-emerald-700";
+                    feed.innerHTML = `<i class="fa-solid fa-circle-check mr-1"></i> <b>¡Correcto!</b> ${item.explain}`;
+                }
+            } else {
+                playSfx('wrong');
+                if (feed) {
+                    feed.className = "p-3 rounded-xl text-xs font-semibold bg-rose-950/90 text-rose-300 border border-rose-700";
+                    feed.innerHTML = `<i class="fa-solid fa-circle-xmark mr-1"></i> <b>Incorrecto.</b> Pertenece a <b>${item.correctCategory}</b>. ${item.explain}`;
+                }
+            }
+
+            unidadesCatIndex++;
+            setTimeout(renderUnidadesStage, 1800);
+        }
+
+        function checkScale(isCorrect) {
+            const feed = document.getElementById('scaleFeed');
+            if (feed) feed.classList.remove('hidden');
+
+            if (isCorrect) {
+                playSfx('win');
+                unidadesScoreVal += 200;
+                document.getElementById('unidadesScore').innerText = unidadesScoreVal;
+                scores.unidades = Math.max(scores.unidades, unidadesScoreVal);
+                updateGlobalScoreDisplay();
+
+                if (feed) {
+                    feed.className = "p-3 rounded-xl text-xs font-semibold bg-emerald-950/90 text-emerald-300 border border-emerald-700";
+                    feed.innerHTML = "<i class='fa-solid fa-trophy mr-1'></i> ¡Excelente! Bit (0/1) ➔ Byte (8 bits) ➔ KB ➔ MB ➔ GB ➔ TB";
+                }
+
+                setTimeout(() => {
+                    showNoticeModal("¡Escala Dominada!", `¡Excelente trabajo! Has completado el Nivel 2 con ${unidadesScoreVal} puntos.\n\nEscala correcta: Bit ➔ Byte ➔ KB ➔ MB ➔ GB ➔ TB`, "fa-solid fa-award text-emerald-400", () => switchTab('dashboard'));
+                }, 1200);
+            } else {
+                playSfx('wrong');
+                if (feed) {
+                    feed.className = "p-3 rounded-xl text-xs font-semibold bg-rose-950/90 text-rose-300 border border-rose-700";
+                    feed.innerHTML = "<i class='fa-solid fa-triangle-exclamation mr-1'></i> Incorrecto. Recuerda: 1 Bit (0/1) ➔ 1 Byte (8 bits) ➔ KB ➔ MB ➔ GB ➔ TB.";
+                }
+            }
+        }
+
+        // MODE 3: SIMULADOR DIRECTOR DE ORQUESTA
+        const simScenarios = [
+            {
+                title: "TikTok y WhatsApp piden RAM simultáneamente",
+                desc: "Tu teléfono tiene poca memoria disponible y ambas aplicaciones se están ejecutando.",
+                options: [
+                    { label: "Administrar Recursos", correct: true, explain: "¡Excelente! El SO reparte la memoria RAM para que ninguna app colapse." },
+                    { label: "Traducir a Binario", correct: false, explain: "Incorrecto. Traducir es para adaptar las entradas de pantalla." },
+                    { label: "Formatear Disco Duro", correct: false, explain: "¡No! Eso borraría toda la información." }
+                ]
+            },
+            {
+                title: "Un archivo ejecutable intenta modificar carpetas del sistema",
+                desc: "El archivo no tiene firma digital y busca alterar la seguridad.",
+                options: [
+                    { label: "Proteger y Bloquear", correct: true, explain: "¡Bien! El SO debe controlar accesos de seguridad y aislar amenazas." },
+                    { label: "Administrar RAM", correct: false, explain: "Incorrecto. Este es un problema de seguridad." },
+                    { label: "Dar permiso de Administrador", correct: false, explain: "¡Peligro! Eso le daría acceso total al virus." }
+                ]
+            },
+            {
+                title: "El usuario toca el botón de 'Inicio' en la pantalla táctil",
+                desc: "La pantalla percibe una pulsación analógica y requiere enviar la orden al microprocesador.",
+                options: [
+                    { label: "Traducir a Código Binario", correct: true, explain: "¡Correcto! Traduce toques de pantalla a ceros y unos para el chip." },
+                    { label: "Comprar más Gigabytes", correct: false, explain: "Incorrecto. No requiere almacenamiento extra." },
+                    { label: "Proteger", correct: false, explain: "Incorrecto. Es un evento normal de interfaz de usuario." }
+                ]
+            }
+        ];
+
+        let simIndex = 0;
+        let simScoreVal = 0;
+
+        function initSimuladorMode() {
+            simIndex = 0;
+            simScoreVal = 0;
+            document.getElementById('simScore').innerText = simScoreVal;
+            renderSimScenario();
+        }
+
+        function renderSimScenario() {
+            if (simIndex >= simScenarios.length) {
+                playSfx('win');
+                scores.simulador = Math.max(scores.simulador, simScoreVal);
+                updateGlobalScoreDisplay();
+                showNoticeModal("¡Excelente Director!", `Completaste la simulación con ${simScoreVal} pts.`, "fa-solid fa-gamepad text-purple-400", () => switchTab('dashboard'));
+                return;
+            }
+
+            const item = simScenarios[simIndex];
+            document.getElementById('simReqNum').innerText = simIndex + 1;
+            document.getElementById('simReqTitle').innerText = item.title;
+            document.getElementById('simReqDesc').innerText = item.desc;
+
+            const btnContainer = document.getElementById('simActionButtons');
+            btnContainer.innerHTML = '';
+
+            item.options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = "bg-slate-800 hover:bg-purple-600/40 border border-slate-700 hover:border-purple-400 p-3 rounded-xl text-xs font-bold text-white transition";
+                btn.innerText = opt.label;
+                btn.onclick = () => checkSimOption(opt);
+                btnContainer.appendChild(btn);
+            });
+
+            document.getElementById('simFeedback').className = "hidden";
+        }
+
+        function checkSimOption(opt) {
+            const feed = document.getElementById('simFeedback');
+            feed.classList.remove('hidden');
+
+            if (opt.correct) {
+                playSfx('correct');
+                simScoreVal += 150;
+                document.getElementById('simScore').innerText = simScoreVal;
+                feed.className = "p-3 rounded-lg text-xs font-semibold bg-emerald-950/80 text-emerald-300 border border-emerald-700";
+                feed.innerText = opt.explain;
+            } else {
+                playSfx('wrong');
+                feed.className = "p-3 rounded-lg text-xs font-semibold bg-rose-950/80 text-rose-300 border border-rose-700";
+                feed.innerText = opt.explain;
+            }
+
+            simIndex++;
+            setTimeout(renderSimScenario, 2000);
+        }
+
+        // MODE 4: TRIVIA BOSS ARENA
+        const triviaQuestions = [
+            {
+                q: "¿Por qué se compara al Sistema Operativo con un 'Director de Orquesta'?",
+                options: [
+                    "Porque reproduce música de alta calidad en Spotify.",
+                    "Porque coordina y controla la pantalla, memoria, teclado y procesador.",
+                    "Porque solo sirve para computadoras de estudio musical.",
+                    "Porque es un programa que viene únicamente en discos compactos."
+                ],
+                correct: 1,
+                explain: "El SO dirige todos los recursos del hardware como un director coordina a los músicos de una orquesta."
+            },
+            {
+                q: "Si tu celular NO tuviera Sistema Operativo instalado, ¿qué sucedería?",
+                options: [
+                    "Funcionaría pero más lento.",
+                    "Solo serviría para tomar fotos.",
+                    "Sería un 'pisapapeles caro', el hardware no servirá de nada.",
+                    "Se conectaría automáticamente a Wi-Fi."
+                ],
+                correct: 2,
+                explain: "Sin el SO, los componentes electrónicos no reciben órdenes ni entienden las acciones del usuario."
+            },
+            {
+                q: "¿Qué analogía representa mejor al Software Privativo (Propietario)?",
+                options: [
+                    "Una receta de pizza pública en internet.",
+                    "La receta secreta de la hamburguesa de McDonald's.",
+                    "Un libro de biblioteca gratuito.",
+                    "Una canción de dominio público."
+                ],
+                correct: 1,
+                explain: "El software privativo guarda su código en secreto y cobra por la licencia de uso, como la receta secreta."
+            },
+            {
+                q: "¿Cuál de los siguientes es un ejemplo de Sistema Operativo LIBRE (Open Source)?",
+                options: [
+                    "Microsoft Windows 11",
+                    "Apple macOS",
+                    "GNU / Linux (Ubuntu)",
+                    "Apple iOS"
+                ],
+                correct: 2,
+                explain: "Linux (Ubuntu) es de código abierto, gratuito y modificable. Se usa en supercomputadoras y la NASA."
+            },
+            {
+                q: "¿Qué diferencia a un Usuario Administrador de un Usuario Estándar?",
+                options: [
+                    "El Administrador solo navega en internet.",
+                    "El Estándar tiene la clave maestra para borrar archivos vitales.",
+                    "El Administrador tiene control total para instalar programas y modificar configuraciones.",
+                    "No hay ninguna diferencia."
+                ],
+                correct: 2,
+                explain: "El Administrador posee privilegios totales; el Estándar está limitado para no comprometer el equipo."
+            },
+            {
+                q: "¿Cuál es la unidad MÍNIMA de información digital?",
+                options: [
+                    "Un Megabyte (MB)",
+                    "Un Bit (0 o 1)",
+                    "Un Hertz (Hz)",
+                    "Un Terabyte (TB)"
+                ],
+                correct: 1,
+                explain: "El Bit (dígito binario 0 o 1) es la unidad básica y mínima de la informática."
+            },
+            {
+                q: "A cuántos Bits equivale un Byte?",
+                options: [
+                    "2 bits",
+                    "8 bits",
+                    "100 bits",
+                    "1024 bits"
+                ],
+                correct: 1,
+                explain: "1 Byte equivale exactamente a 8 bits y representa un carácter o letra."
+            },
+            {
+                q: "¿Qué unidad se utiliza para medir la VELOCIDAD del procesador (chip)?",
+                options: [
+                    "Mbps (Megabits por segundo)",
+                    "GB (Gigabytes)",
+                    "Hertz / Gigahertz (Hz / GHz)",
+                    "TB (Terabytes)"
+                ],
+                correct: 2,
+                explain: "Los Hertz (Hz/GHz) miden los ciclos de cálculo por segundo del procesador."
+            },
+            {
+                q: "Si contratas un paquete de internet de '100 Mbps', ¿qué estás midiendo?",
+                options: [
+                    "La capacidad del disco duro.",
+                    "La velocidad de transferencia de datos por segundo de la red.",
+                    "La cantidad de núcleos del procesador.",
+                    "La resolución de la pantalla."
+                ],
+                correct: 1,
+                explain: "Mbps (Megabits por segundo) mide la velocidad con la que viajan los datos en tu conexión."
+            },
+            {
+                q: "Si un videojuego pesa 50 GB y tu consola tiene un disco duro de 1 TB (~1,000 GB), ¿de qué unidad estamos hablando?",
+                options: [
+                    "Velocidad de red",
+                    "Procesamiento gráfico",
+                    "Capacidad de Almacenamiento",
+                    "Frecuencia de reloj"
+                ],
+                correct: 2,
+                explain: "Los GB y TB pertenecen a la familia de Almacenamiento (espacio disponible)."
+            }
+        ];
+
+        let triviaIndex = 0;
+        let triviaScoreVal = 0;
+        let triviaStreakMultiplier = 1;
+
+        function initTriviaMode() {
+            triviaIndex = 0;
+            triviaScoreVal = 0;
+            triviaStreakMultiplier = 1;
+            document.getElementById('triviaScore').innerText = "Puntos: 0";
+            document.getElementById('triviaStreak').innerText = "x1 🔥";
+            renderTriviaQuestion();
+        }
+
+        function renderTriviaQuestion() {
+            if (triviaIndex >= triviaQuestions.length) {
+                // Finish Quiz
+                playSfx('win');
+                scores.trivia = Math.max(scores.trivia, triviaScoreVal);
+                updateGlobalScoreDisplay();
+                showFinalCertificate();
+                return;
+            }
+
+            const qData = triviaQuestions[triviaIndex];
+            
+            // Progress Bar
+            const percent = ((triviaIndex) / triviaQuestions.length) * 100;
+            document.getElementById('triviaProgressBar').style.width = `${percent}%`;
+
+            document.getElementById('triviaQuestionIndex').innerText = `Pregunta ${triviaIndex + 1} de ${triviaQuestions.length}`;
+            document.getElementById('triviaQuestionText').innerText = qData.q;
+
+            const optsContainer = document.getElementById('triviaOptionsContainer');
+            optsContainer.innerHTML = '';
+
+            qData.options.forEach((optText, i) => {
+                const btn = document.createElement('button');
+                btn.className = "w-full text-left glass-card hover:bg-amber-500/20 hover:border-amber-400 p-4 rounded-xl text-sm font-medium text-slate-200 transition flex items-center space-x-3";
+                btn.innerHTML = `
+                    <span class="bg-slate-800 text-amber-300 w-7 h-7 rounded-lg flex items-center justify-center font-bold text-xs shrink-0">${String.fromCharCode(65 + i)}</span>
+                    <span>${optText}</span>
+                `;
+                btn.onclick = () => checkTriviaAnswer(i, btn);
+                optsContainer.appendChild(btn);
+            });
+
+            document.getElementById('triviaFeedback').className = "hidden";
+            document.getElementById('triviaNextBtn').classList.add('hidden');
+        }
+
+        function checkTriviaAnswer(selectedIdx, btnEl) {
+            const qData = triviaQuestions[triviaIndex];
+            const feedback = document.getElementById('triviaFeedback');
+            feedback.classList.remove('hidden');
+
+            // Disable all option buttons
+            const buttons = document.querySelectorAll('#triviaOptionsContainer button');
+            buttons.forEach(b => b.disabled = true);
+
+            if (selectedIdx === qData.correct) {
+                playSfx('correct');
+                const pts = 100 * triviaStreakMultiplier;
+                triviaScoreVal += pts;
+                triviaStreakMultiplier++;
+                btnEl.classList.add('border-emerald-500', 'bg-emerald-950/60');
+
+                feedback.className = "mt-4 p-4 rounded-xl text-xs sm:text-sm bg-emerald-950/80 text-emerald-300 border border-emerald-700 leading-relaxed";
+                feedback.innerHTML = `<i class="fa-solid fa-circle-check text-lg mr-1.5"></i> <b>¡Respuesta Correcta! (+${pts} pts)</b><br>${qData.explain}`;
+            } else {
+                playSfx('wrong');
+                triviaStreakMultiplier = 1;
+                btnEl.classList.add('border-rose-500', 'bg-rose-950/60');
+                
+                // Highlight correct one
+                buttons[qData.correct].classList.add('border-emerald-500', 'bg-emerald-950/40');
+
+                feedback.className = "mt-4 p-4 rounded-xl text-xs sm:text-sm bg-rose-950/80 text-rose-300 border border-rose-700 leading-relaxed";
+                feedback.innerHTML = `<i class="fa-solid fa-circle-xmark text-lg mr-1.5"></i> <b>Incorrecto.</b><br>${qData.explain}`;
+            }
+
+            document.getElementById('triviaScore').innerText = `Puntos: ${triviaScoreVal}`;
+            document.getElementById('triviaStreak').innerText = `x${triviaStreakMultiplier} 🔥`;
+            document.getElementById('triviaNextBtn').classList.remove('hidden');
+        }
+
+        function nextTriviaQuestion() {
+            triviaIndex++;
+            renderTriviaQuestion();
+        }
+
+        function showFinalCertificate() {
+            const total = scores.clasificador + scores.unidades + scores.simulador + scores.trivia;
+            document.getElementById('finalScoreText').innerText = total;
+
+            let grade = "10 / 10";
+            if (total < 1000) grade = "8 / 10";
+            if (total < 600) grade = "6 / 10";
+
+            document.getElementById('finalGradeText').innerText = grade;
+
+            const feedbackList = document.getElementById('finalFeedbackList');
+            feedbackList.innerHTML = `
+                <div><i class="fa-solid fa-check text-emerald-400 mr-1"></i> Dominas la diferencia entre Software Privativo (cerrado) y Libre (abierto).</div>
+                <div><i class="fa-solid fa-check text-emerald-400 mr-1"></i> Identificas al SO como el Director de Orquesta que administra RAM y seguridad.</div>
+                <div><i class="fa-solid fa-check text-emerald-400 mr-1"></i> Distingues almacenamiento (GB/TB), velocidad (Mbps) y procesamiento (GHz).</div>
+            `;
+
+            document.getElementById('resultsModal').classList.remove('hidden');
+        }
+
+        function closeResultsModal() {
+            document.getElementById('resultsModal').classList.add('hidden');
+        }
+
+        function alertModal(title, msg, onOk) {
+            showNoticeModal(title, msg, "fa-solid fa-circle-info text-cyan-400", onOk);
+        }
+
+        // Initialize score display on load
+        window.onload = function() {
+            updateGlobalScoreDisplay();
+        };
+    </script>
+</body>
+</html>
